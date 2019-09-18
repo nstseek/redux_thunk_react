@@ -6,9 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import * as Redux from 'redux';
 import { Provider } from 'react-redux';
 import { messagesReducer } from './stores/messagesStore';
+import thunkMiddleware from 'redux-thunk';
 
-const rootReducer = Redux.combineReducers({messagesReducer});
-const store = Redux.createStore(rootReducer);
+const rootReducer = Redux.combineReducers({ messagesReducer });
+const store = Redux.createStore(rootReducer, Redux.applyMiddleware(thunkMiddleware));
 export type AppState = ReturnType<typeof rootReducer>;
 
 const rootElement = (

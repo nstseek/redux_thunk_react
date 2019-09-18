@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { MessagesState, SaveMessageAction, ClearMessagesAction, MessagesPayload } from './stores/messagesStore';
+import { MessagesState, SaveMessageAction, ClearMessagesAction, MessagesPayload, SaveAddressAction } from './stores/messagesStore';
 import { Dispatch } from 'redux';
 import { ActionReturn } from './types';
 import MessagesActionTypes from './stores/messagesStore/action-types';
@@ -32,7 +32,8 @@ const mapStoreToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     saveMessage: (user: string, message: string) => dispatch(SaveMessageAction(user, message)),
-    clearMessages: () => dispatch(ClearMessagesAction())
+    clearMessages: () => dispatch(ClearMessagesAction()),
+    getAddress: (user: string, cep: string) => SaveAddressAction(dispatch, user, cep)
 });
 
 class App extends React.Component<Props, State> {

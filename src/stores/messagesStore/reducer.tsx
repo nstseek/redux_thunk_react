@@ -1,10 +1,13 @@
 import { ActionReturn } from '../../types';
 import MessagesActionTypes from './action-types';
-import { MessagesPayload } from './actions';
+import { MessagesPayload, AddressPayload } from './actions';
 
 export interface MessagesState {
     messages: {
-        [user: string]: string[];
+        [user: string]: {
+            message: string;
+            address: string;
+        };
     };
 }
 
@@ -21,12 +24,52 @@ export const messagesReducer = (
             return {
                 messages: {
                     ...state.messages,
-                    [action.payload.user]: action.payload.message
+                    [action.payload.user]: {
+                        message: action.payload.message
+                    }
                 }
             };
         case MessagesActionTypes.CLEAR_MESSAGES:
             return initialState;
         default:
             return state;
+    }
+};
+
+export const addressReducer = (
+    state = initialState,
+    action: ActionReturn<MessagesActionTypes, AddressPayload>
+): MessagesState => {
+    switch (action.type) {
+        case `${MessagesActionTypes.GET_ADDRESS}_PENDING`:
+            return {
+                messages: {
+                    ...state.messages,
+                    [action.payload.user]: {
+                        ...state.messages[action.payload.user],
+                        address: 'Loading...'
+                    }
+                }
+            };
+        case `${MessagesActionTypes.GET_ADDRESS}_SUCCESS`:
+            return {
+                messages: {
+                    ...state.messages,
+                    [action.payload.user]: {
+                        ...state.messages[action.payload.user],
+                        address: action.payload.address
+                    }
+                }
+            };
+        case `${MessagesActionTypes.GET_ADDRESS}_FAILED`:
+            return {
+                messages: {
+                    ...state.messages,
+                    [action.payload.user]: {
+                        ...state.messages[action.payload.user],
+                        address: 'Failed to fetch address'
+                    }
+                }
+            };
     }
 };

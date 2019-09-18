@@ -8,6 +8,11 @@ export interface MessagesPayload {
     user: string;
 }
 
+export interface AddressPayload {
+    user: string;
+    address: string;
+}
+
 export const SaveMessageAction = (user: string, message: string): MessagesActionsReturn => {
     return {
         type: MessagesActionTypes.SAVE_MESSAGE,
@@ -24,3 +29,8 @@ export const ClearMessagesAction = (): MessagesActionsReturn => {
         payload: null
     };
 };
+
+export const SaveAddressAction = (dispatch: any, user: string, cep: string) => {
+    dispatch({type: `${MessagesActionTypes.GET_ADDRESS}_PENDING`, payload: null});
+    fetch() // continuar o fetch
+}
