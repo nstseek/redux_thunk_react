@@ -59,7 +59,7 @@ class App extends React.Component<Props, State> {
             <div className='App'>
                 <header className='App-header'>
                     <img src={logo} className='App-logo' alt='logo' />
-                    <h3>Sistema de status usando Redux (futuramente Redux Thunk pra linkar fotos da web)</h3>
+                    <h3>Sistema de status usando Redux (futuramente Redux Thunk pra pegar o endereco do usuário via cep na web)</h3>
                     <div>
                         <span style={{ margin: 20 }}>Digite um usuário de destino</span>
                         <input
