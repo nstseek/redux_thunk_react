@@ -31,3 +31,48 @@
     transform: rotate(360deg);
   }
 }
+
+.list-item {
+  margin-top: 15px;
+  list-style-type: none;
+}
+
+.item-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+}
+
+.user-data {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.address-data {
+  margin-right: 5vw;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.address-text {
+  color: #888;
+  font-size: 18px;
+}
+
+.status {
+  font-size: 18px;
+}

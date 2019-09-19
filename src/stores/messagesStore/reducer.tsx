@@ -1,22 +1,34 @@
 import { ActionReturn } from '../../types';
 import MessagesActionTypes from './action-types';
-import { MessagesPayload, AddressPayload } from './actions';
+import { MessagesPayload, CepPayload } from './actions';
 
 export interface MessagesState {
     messages: {
         [user: string]: {
             message: string;
-            address: string;
+            image: string;
         };
     };
 }
 
-const initialState = {
+export interface AddressState {
+    addresses: {
+        [user: string]: {
+            address: CepPayload;
+        };
+    };
+}
+
+const initialMessagesState = {
     messages: {}
 };
 
+const initialAddressesState = {
+    addresses: {}
+};
+
 export const messagesReducer = (
-    state = initialState,
+    state = initialMessagesState,
     action: ActionReturn<MessagesActionTypes, MessagesPayload>
 ): MessagesState => {
     switch (action.type) {
@@ -25,51 +37,35 @@ export const messagesReducer = (
                 messages: {
                     ...state.messages,
                     [action.payload.user]: {
-                        message: action.payload.message
+                        message: action.payload.message,
+                        image: action.payload.image
                     }
                 }
             };
         case MessagesActionTypes.CLEAR_MESSAGES:
-            return initialState;
+            return initialMessagesState;
         default:
             return state;
     }
 };
 
 export const addressReducer = (
-    state = initialState,
-    action: ActionReturn<MessagesActionTypes, AddressPayload>
-): MessagesState => {
+    state = initialAddressesState,
+    action: ActionReturn<MessagesActionTypes, CepPayload>
+): AddressState => {
     switch (action.type) {
-        case `${MessagesActionTypes.GET_ADDRESS}_PENDING`:
+        case MessagesActionTypes.GET_ADDRESS_PENDING:
+        case MessagesActionTypes.GET_ADDRESS_SUCCESS:
+        case MessagesActionTypes.GET_ADDRESS_FAILED:
             return {
-                messages: {
-                    ...state.messages,
+                addresses: {
+                    ...state.addresses,
                     [action.payload.user]: {
-                        ...state.messages[action.payload.user],
-                        address: 'Loading...'
+                        address: action.payload
                     }
                 }
             };
-        case `${MessagesActionTypes.GET_ADDRESS}_SUCCESS`:
-            return {
-                messages: {
-                    ...state.messages,
-                    [action.payload.user]: {
-                        ...state.messages[action.payload.user],
-                        address: action.payload.address
-                    }
-                }
-            };
-        case `${MessagesActionTypes.GET_ADDRESS}_FAILED`:
-            return {
-                messages: {
-                    ...state.messages,
-                    [action.payload.user]: {
-                        ...state.messages[action.payload.user],
-                        address: 'Failed to fetch address'
-                    }
-                }
-            };
+        default:
+            return state;
     }
 };

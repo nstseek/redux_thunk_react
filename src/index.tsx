@@ -5,11 +5,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as Redux from 'redux';
 import { Provider } from 'react-redux';
-import { messagesReducer } from './stores/messagesStore';
+import { messagesReducer, addressReducer } from './stores/messagesStore';
 import thunkMiddleware from 'redux-thunk';
+import logger from 'redux-logger';
 
-const rootReducer = Redux.combineReducers({ messagesReducer });
-const store = Redux.createStore(rootReducer, Redux.applyMiddleware(thunkMiddleware));
+const rootReducer = Redux.combineReducers({ messagesReducer, addressReducer });
+const store = Redux.createStore(rootReducer, Redux.applyMiddleware(thunkMiddleware, logger));
 export type AppState = ReturnType<typeof rootReducer>;
 
 const rootElement = (
