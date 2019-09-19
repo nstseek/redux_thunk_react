@@ -140,19 +140,20 @@ class App extends React.Component<Props, State> {
     }
 
     parseAddress = (obj: CepPayload, key: string) => {
+        const userAddress = this.props.addressStore.addresses[key].address
         return obj.cep ? (
             <div key={`${key} address`} className='address-data'>
                 <span className='address-text' key={`${key} street`}>
-                    {`${this.props.addressStore.addresses[key].address}`}Rua Guaianá, 589, Vila Monte Carlo
+                    {`${userAddress.logradouro}, ${userAddress.bairro}`}
                 </span>
                 <span className='address-text' key={`${key} state`}>
-                    Cachoeirinha - RS
+                    {`${userAddress.localidade} - ${userAddress.uf}`}
                 </span>
                 <span className='address-text' key={`${key} country`}>
                     Brasil
                 </span>
             </div>
-        ) : <span>{obj.errorMsg}</span>;
+        ) : <span className='address-data'>{obj.errorMsg}</span>;
     };
 
     saveUser = () => {
